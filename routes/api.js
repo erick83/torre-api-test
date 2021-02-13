@@ -30,16 +30,33 @@ router.post('/opportunities', async function(req, res, next) {
     searchParams: query,
     json: body,
     responseType: 'json'
-  }
+  };
 
   try {
     const response = await got.post('https://search.torre.co/opportunities/_search/', requestParams)
     res.json(response.body);
   } catch (error) {
-    var errorNumber = getErrorCode(error)
-    res.status(errorNumber).json({ message: error.message })
+    var errorNumber = getErrorCode(error);
+    res.status(errorNumber).json({ message: error.message });
   }
-})
+});
+
+router.post('/opportunities', async function(req, res, next) {
+  const { query, body } = req;
+  const requestParams = {
+    searchParams: query,
+    json: body,
+    responseType: 'json'
+  };
+
+  try {
+    const response = await got.post('https://search.torre.co/peopple/_search/', requestParams)
+    res.json(response.body);
+  } catch (error) {
+    var errorNumber = getErrorCode(error);
+    res.status(errorNumber).json({ message: error.message });
+  }
+});
 
 function getErrorCode(error) {
   return error.number || parseInt(error.message.match(/\d{3}/g))
