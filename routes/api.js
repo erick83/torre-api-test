@@ -3,7 +3,7 @@ var got = require('got');
 var router = express.Router();
 
 router.get('/bios/:user', async function(req, res, next) {
-  const { params } = re
+  const { params } = req
 
   try {
     const response = await got.get(`https://torre.bio/api/bios/${params.user}`,);
