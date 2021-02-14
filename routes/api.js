@@ -3,7 +3,8 @@ var got = require('got');
 var router = express.Router();
 
 router.get('/bios/:user', async function(req, res, next) {
-  const { params } = req
+  const { params } = re
+
   try {
     const response = await got.get(`https://torre.bio/api/bios/${params.user}`,);
     res.json(JSON.parse(response.body));
@@ -13,8 +14,10 @@ router.get('/bios/:user', async function(req, res, next) {
   }
 });
 
+
 router.get('/opportunities/:id', async function(req, res, next) {
   const { params } = req;
+
   try {
     const response = await got.get(`https://torre.co/api/opportunities/${params.id}`);
     res.json(JSON.parse(response.body));
@@ -23,6 +26,7 @@ router.get('/opportunities/:id', async function(req, res, next) {
     res.status(errorNumber).json({ message: error.message });
   }
 });
+
 
 router.post('/opportunities', async function(req, res, next) {
   const { query, body } = req;
@@ -34,14 +38,15 @@ router.post('/opportunities', async function(req, res, next) {
 
   try {
     const response = await got.post('https://search.torre.co/opportunities/_search/', requestParams)
-    res.json(JSON.parse(response.body));
+    res.json(response.body);
   } catch (error) {
     var errorNumber = getErrorCode(error);
     res.status(errorNumber).json({ message: error.message });
   }
 });
 
-router.post('/opportunities', async function(req, res, next) {
+
+router.post('/peopple', async function(req, res, next) {
   const { query, body } = req;
   const requestParams = {
     searchParams: query,
@@ -58,8 +63,10 @@ router.post('/opportunities', async function(req, res, next) {
   }
 });
 
+
 function getErrorCode(error) {
   return error.number || parseInt(error.message.match(/\d{3}/g))
 }
+
 
 module.exports = router;
